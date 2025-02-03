@@ -112,5 +112,10 @@
     "npm": "8.19.4"
   },
   "gitHead": "a5e123d9e0690fcea92878ea8a0a382922009fc9",
-  "private": true
+  "private": true,
+  "dependencies": {
+    "@expo/vector-icons": "^14.0.4",
+    "expo": "^52.0.28",
+    "expo-status-bar": "^2.0.1"
+  }
 }
