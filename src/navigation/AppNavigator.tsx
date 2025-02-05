@@ -1,33 +1,21 @@
 // src/navigation/AppNavigator.tsx
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { AuthNavigator } from './AuthNavigator';
-import { HomeScreen } from '../screens/app/HomeScreen';
-import { ProfileScreen } from '../screens/app/ProfileScreen';
+import AuthNavigator from './AuthNavigator';
 import { RootStackParamList } from './types';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
-const AppStack = createNativeStackNavigator();
 
-const MainAppNavigator = () => {
+const AppNavigator = () => {
   return (
-    <AppStack.Navigator>
-      <AppStack.Screen name="Home" component={HomeScreen} />
-      <AppStack.Screen name="Profile" component={ProfileScreen} />
-    </AppStack.Navigator>
-  );
-};
-
-export const AppNavigator = () => {
-  const isAuthenticated = false; // Replace with your auth logic
-
-  return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
-      {!isAuthenticated ? (
-        <Stack.Screen name="Auth" component={AuthNavigator} />
-      ) : (
-        <Stack.Screen name="App" component={MainAppNavigator} />
-      )}
+    <Stack.Navigator>
+      <Stack.Screen 
+        name="Auth" 
+        component={AuthNavigator} 
+        options={{ headerShown: false }}
+      />
     </Stack.Navigator>
   );
 };
+
+export default AppNavigator;
