@@ -1,23 +1,15 @@
 // src/providers/AppProvider.tsx
 import React from 'react';
-import { Provider as PaperProvider, MD3LightTheme } from 'react-native-paper';
+import { MD3LightTheme, Provider as PaperProvider } from 'react-native-paper';
 import { NavigationContainer } from '@react-navigation/native';
-import { useTheme } from '../hooks/useTheme';
 
-export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const theme = useTheme();
+type Props = {
+  children: React.ReactNode;
+};
 
-  const paperTheme = {
-    ...MD3LightTheme,
-    colors: {
-      ...MD3LightTheme.colors,
-      primary: theme.colors.primary,
-      secondary: theme.colors.primaryDark,
-    },
-  };
-
+export const AppProvider: React.FC<Props> = ({ children }) => {
   return (
-    <PaperProvider theme={paperTheme}>
+    <PaperProvider theme={MD3LightTheme}>
       <NavigationContainer>
         {children}
       </NavigationContainer>
