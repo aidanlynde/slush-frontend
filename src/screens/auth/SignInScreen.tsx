@@ -4,24 +4,27 @@ import { View, StyleSheet, Image } from 'react-native';
 import { Text, TextInput, Button } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { AuthStackParamList } from '../../navigation/types';
-import { useAuth } from '../../hooks/useAuth';
+import { RootStackParamList } from '../../navigation/types';
+import { useAuthContext } from '../../providers/AuthProvider';
 import { useTheme } from '../../hooks/useTheme';
 
-type Props = NativeStackScreenProps<AuthStackParamList, 'SignIn'>;
+type Props = NativeStackScreenProps<RootStackParamList, 'SignIn'>;
 
 const SignInScreen: React.FC<Props> = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-  const { login, isLoading, error } = useAuth();
+  const { login, isLoading, error } = useAuthContext();
   const theme = useTheme();
 
   const handleLogin = async () => {
     try {
-      await login({ email, password });
+      console.log('Attempting login with:', { email, password });
+      const result = await login({ email, password });
+      console.log('Login successful:', result);
       // Navigation will be handled by the auth state change
     } catch (err) {
+      console.error('Login error:', err);
       // Error is handled by useAuth hook
     }
   };

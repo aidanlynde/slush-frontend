@@ -4,18 +4,18 @@ import { View, StyleSheet } from 'react-native';
 import { Text, TextInput, Button } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { AuthStackParamList } from '../../navigation/types';
-import { useAuth } from '../../hooks/useAuth';
+import { RootStackParamList } from '../../navigation/types';
+import { useAuthContext } from '../../providers/AuthProvider';
 import { useTheme } from '../../hooks/useTheme';
 
-type Props = NativeStackScreenProps<AuthStackParamList, 'SignUp'>;
+type Props = NativeStackScreenProps<RootStackParamList, 'SignUp'>;
 
 const SignUpScreen: React.FC<Props> = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-  const { signup, isLoading, error } = useAuth();
+  const { signup, isLoading, error } = useAuthContext();
   const theme = useTheme();
 
   const handleSignUp = async () => {
