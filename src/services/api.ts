@@ -3,8 +3,8 @@ import { Platform } from 'react-native';
 import * as Types from '../types/api';
 
 const API_URL = Platform.select({
-  ios: 'https://slush-backend-production.up.railway.app/',
-  android: 'https://slush-backend-production.up.railway.app/',
+  ios: 'https://slush-backend-production.up.railway.app',
+  android: 'https://slush-backend-production.up.railway.app',
 })!;
 
 class ApiClient {
@@ -61,6 +61,31 @@ class ApiClient {
   }
 
   // Auth Endpoints
+  async testConnection(): Promise<boolean> {
+    try {
+      // Try to create a test user instead of GET request
+      await this.fetch('/users/', {
+        method: 'POST',
+        body: JSON.stringify({
+          email: 'test@example.com',
+          username: 'testuser',
+          password: 'password123'
+        })
+      });
+      console.log('API Connection successful');
+      return true;
+    } catch (error) {
+      // If we get a validation error, that means we reached the API
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      if (errorMessage.includes('validation')) {
+        console.log('API Connection successful (validation error expected)');
+        return true;
+      }
+      console.error('API Connection failed:', error);
+      return false;
+    }
+  }
+
   async createUser(data: Types.CreateUserRequest): Promise<Types.UserResponse> {
     return this.fetch<Types.UserResponse>('/users/', {
       method: 'POST',
