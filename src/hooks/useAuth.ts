@@ -62,8 +62,21 @@ export const useAuth = () => {
     setError(null);
     try {
       const loginResponse = await api.login(data);
-      // Here you might want to fetch user profile data if needed
-      await AsyncStorage.setItem(TOKEN_KEY, loginResponse.access_token);
+      // For now, we'll create a basic user object
+      const userObj = {
+        id: 1,
+        email: data.email,
+        username: data.email.split('@')[0],
+        is_active: true,
+        created_at: new Date().toISOString(),
+      };
+
+      await Promise.all([
+        AsyncStorage.setItem(TOKEN_KEY, loginResponse.access_token),
+        AsyncStorage.setItem(USER_KEY, JSON.stringify(userObj)),
+      ]);
+
+      setUser(userObj);
       return loginResponse;
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Login failed';
