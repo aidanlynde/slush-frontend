@@ -4,11 +4,14 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { NavigationContainer, DarkTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { AppProvider } from './src/providers/AppProvider';
+import { AuthProvider } from './src/providers/AuthProvider';
 import SignInScreen from './src/screens/auth/SignInScreen';
 import SignUpScreen from './src/screens/auth/SignUpScreen';
-import { AuthStackParamList } from './src/navigation/types';
+import HomeScreen from './src/screens/app/HomeScreen';
+import { RootStackParamList } from './src/navigation/types';
+import { useAuthContext } from './src/providers/AuthProvider';
 
-const Stack = createNativeStackNavigator<AuthStackParamList>();
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const navigationTheme = {
   ...DarkTheme,
@@ -21,23 +24,39 @@ const navigationTheme = {
   },
 };
 
+function NavigationContent() {
+  const { user } = useAuthContext();
+
+  return (
+    <Stack.Navigator 
+      screenOptions={{ 
+        headerShown: false,
+        contentStyle: {
+          backgroundColor: '#1A1A1A',
+        },
+      }}
+    >
+      {!user ? (
+        <>
+          <Stack.Screen name="SignIn" component={SignInScreen} />
+          <Stack.Screen name="SignUp" component={SignUpScreen} />
+        </>
+      ) : (
+        <Stack.Screen name="Home" component={HomeScreen} />
+      )}
+    </Stack.Navigator>
+  );
+}
+
 export default function App() {
   return (
     <SafeAreaProvider>
       <AppProvider>
-        <NavigationContainer theme={navigationTheme}>
-          <Stack.Navigator 
-            screenOptions={{ 
-              headerShown: false,
-              contentStyle: {
-                backgroundColor: '#1A1A1A',
-              },
-            }}
-          >
-            <Stack.Screen name="SignIn" component={SignInScreen} />
-            <Stack.Screen name="SignUp" component={SignUpScreen} />
-          </Stack.Navigator>
-        </NavigationContainer>
+        <AuthProvider>
+          <NavigationContainer theme={navigationTheme}>
+            <NavigationContent />
+          </NavigationContainer>
+        </AuthProvider>
       </AppProvider>
     </SafeAreaProvider>
   );
