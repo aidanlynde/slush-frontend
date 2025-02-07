@@ -10,6 +10,8 @@ import SignUpScreen from './src/screens/auth/SignUpScreen';
 import HomeScreen from './src/screens/app/HomeScreen';
 import { RootStackParamList } from './src/navigation/types';
 import { useAuthContext } from './src/providers/AuthProvider';
+import { useEffect } from 'react';
+import { initializeWordFilter } from './src/utils/wordFilter';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -49,6 +51,9 @@ function NavigationContent() {
 }
 
 export default function App() {
+  useEffect(() => {
+    initializeWordFilter();
+  }, []);
   return (
     <SafeAreaProvider>
       <AppProvider>
