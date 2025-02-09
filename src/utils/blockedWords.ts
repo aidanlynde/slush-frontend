@@ -223,6 +223,9 @@ nawashi
 negro
 neonazi
 nigga
+niggr
+nigr
+nig
 nigger
 nig nog
 nimphomania

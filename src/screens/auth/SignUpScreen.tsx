@@ -32,13 +32,6 @@ const SignUpScreen: React.FC<Props> = ({ navigation }) => {
 
   useEffect(() => {
     if (username) {
-      // Check for offensive content first
-      if (containsOffensiveContent(username)) {
-        setUsernameError('Username contains inappropriate content');
-        return;
-      }
-      
-      // Then check other validation rules
       const validationResult = validateUsername(username);
       setUsernameError(validationResult);
     } else {
