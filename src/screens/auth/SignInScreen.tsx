@@ -17,6 +17,7 @@ import { RootStackParamList } from '../../navigation/types';
 import { useAuthContext } from '../../providers/AuthProvider';
 import { useTheme } from '../../hooks/useTheme';
 import { validateEmail } from '../../utils/validation';
+import { haptic } from '../../utils/haptics';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'SignIn'>;
 
@@ -42,20 +43,18 @@ const SignInScreen: React.FC<Props> = ({ navigation }) => {
   }, [email]);
 
   const handleLogin = async () => {
-    Keyboard.dismiss();
-    
-    // Validate before submission
-    const emailValidation = validateEmail(email);
-    setEmailError(emailValidation);
-
-    if (emailValidation || !password) {
-      return;
-    }
-
     try {
+      await haptic.medium(); // Feedback when button is pressed
+      
+      if (!email || !password) {
+        await haptic.error();
+        return;
+      }
+  
       await login({ email, password });
+      await haptic.success(); // Feedback for successful login
     } catch (err) {
-      // Error is handled by useAuth hook
+      await haptic.error(); // Feedback for failed login
     }
   };
 

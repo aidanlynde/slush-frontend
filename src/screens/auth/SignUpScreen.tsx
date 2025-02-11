@@ -9,6 +9,8 @@ import { useAuthContext } from '../../providers/AuthProvider';
 import { useTheme } from '../../hooks/useTheme';
 import { validateEmail, validatePassword, getPasswordStrength } from '../../utils/validation';
 import { validateUsername, containsOffensiveContent } from '../../utils/wordFilter';
+import { haptic } from '../../utils/haptics';
+
 
 type Props = NativeStackScreenProps<RootStackParamList, 'SignUp'>;
 
@@ -51,25 +53,22 @@ const SignUpScreen: React.FC<Props> = ({ navigation }) => {
     const emailValidation = validateEmail(email);
     const usernameValidation = validateUsername(username);
     const passwordValidation = validatePassword(password);
-
+  
     setEmailError(emailValidation);
     setUsernameError(usernameValidation);
     setPasswordError(passwordValidation);
-
-    // Check for offensive content explicitly
-    if (containsOffensiveContent(username)) {
-      setUsernameError('Username contains inappropriate content');
-      return;
-    }
-
+  
     if (emailValidation || usernameValidation || passwordValidation) {
+      await haptic.error(); // Error feedback for validation failures
       return;
     }
-
+  
     try {
+      await haptic.medium(); // Feedback when button is pressed
       await signup({ email, username, password });
+      await haptic.success(); // Feedback for successful signup
     } catch (err) {
-      // Error is handled by useAuth hook
+      await haptic.error(); // Feedback for failed signup
     }
   };
 
