@@ -1,5 +1,5 @@
 // App.tsx
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { NavigationContainer, DarkTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -8,8 +8,10 @@ import { AuthProvider } from './src/providers/AuthProvider';
 import SignInScreen from './src/screens/auth/SignInScreen';
 import SignUpScreen from './src/screens/auth/SignUpScreen';
 import HomeScreen from './src/screens/app/HomeScreen';
+import SplashScreen from './src/screens/SplashScreen';
 import { RootStackParamList } from './src/navigation/types';
 import { useAuthContext } from './src/providers/AuthProvider';
+import { initializeWordFilter } from './src/utils/wordFilter';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -49,6 +51,28 @@ function NavigationContent() {
 }
 
 export default function App() {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const initialize = async () => {
+      try {
+        await initializeWordFilter();
+        // Add minimum delay for smooth UX
+        await new Promise(resolve => setTimeout(resolve, 2000));
+      } catch (error) {
+        console.error('Initialization error:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    initialize();
+  }, []);
+
+  if (isLoading) {
+    return <SplashScreen />;
+  }
+
   return (
     <SafeAreaProvider>
       <AppProvider>
