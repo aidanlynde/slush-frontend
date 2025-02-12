@@ -1,50 +1,160 @@
+# Slush Mobile App
 
-# TypeScript
+## Project Overview
+Slush is a mobile payment splitting application designed to streamline group payments and reimbursements. The app allows users to easily split bills, track shared expenses, and facilitate payments through various payment platforms.
 
-[![GitHub Actions CI](https://github.com/microsoft/TypeScript/workflows/CI/badge.svg)](https://github.com/microsoft/TypeScript/actions?query=workflow%3ACI)
-[![npm version](https://badge.fury.io/js/typescript.svg)](https://www.npmjs.com/package/typescript)
-[![Downloads](https://img.shields.io/npm/dm/typescript.svg)](https://www.npmjs.com/package/typescript)
-[![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/microsoft/TypeScript/badge)](https://securityscorecards.dev/viewer/?uri=github.com/microsoft/TypeScript)
+### Core Features
+- User authentication (email/password)
+- Quick payment entry via number pad
+- Flexible group splitting functionality
+- QR code and link sharing
+- Platform-agnostic payment integration (Venmo, Cash App, PayPal)
+- User-less claiming system for recipients
 
+## Tech Stack
+### Frontend (Mobile)
+- React Native with Expo
+- TypeScript for type safety
+- React Navigation for routing
+- React Native Paper for UI components
+- Expo Haptics for tactile feedback
+- AsyncStorage for local storage
 
-[TypeScript](https://www.typescriptlang.org/) is a language for application-scale JavaScript. TypeScript adds optional types to JavaScript that support tools for large-scale JavaScript applications for any browser, for any host, on any OS. TypeScript compiles to readable, standards-based JavaScript. Try it out at the [playground](https://www.typescriptlang.org/play/), and stay up to date via [our blog](https://blogs.msdn.microsoft.com/typescript) and [Twitter account](https://twitter.com/typescript).
+### Backend
+- FastAPI (Python)
+- PostgreSQL database
+- JWT authentication
+- RESTful API design
 
-Find others who are using TypeScript at [our community page](https://www.typescriptlang.org/community/).
-
-## Installing
-
-For the latest stable version:
-
-```bash
-npm install -D typescript
+## Project Structure
+```
+slush-frontend/
+├── src/
+│   ├── components/
+│   │   ├── common/        # Reusable components
+│   │   └── specific/      # Feature-specific components
+│   ├── hooks/           # Custom React hooks
+│   ├── navigation/        # Navigation configuration
+│   ├── providers/        # Context providers
+│   ├── screens/          # Screen components
+│   │   ├── auth/         # Authentication screens
+│   │   └── app/          # Main app screens
+│   ├── services/        # API and service integrations
+│   ├──theme/           # Theming and styling
+│   ├──types/           # types
+│   ├── utils/           # Utility functions
+├── assets/              # Static assets
+└── App.tsx             # Root component
 ```
 
-For our nightly builds:
+## Setup Instructions
 
+### Prerequisites
+- Node.js (v14 or higher)
+- npm or yarn
+- Expo CLI
+- iOS Simulator or Android Emulator
+
+### Installation
+1. Clone the repository:
 ```bash
-npm install -D typescript@next
+git clone [repository-url]
+cd slush-frontend
 ```
 
-## Contribute
+2. Install dependencies:
+```bash
+npm install
+```
 
-There are many ways to [contribute](https://github.com/microsoft/TypeScript/blob/main/CONTRIBUTING.md) to TypeScript.
-* [Submit bugs](https://github.com/microsoft/TypeScript/issues) and help us verify fixes as they are checked in.
-* Review the [source code changes](https://github.com/microsoft/TypeScript/pulls).
-* Engage with other TypeScript users and developers on [StackOverflow](https://stackoverflow.com/questions/tagged/typescript).
-* Help each other in the [TypeScript Community Discord](https://discord.gg/typescript).
-* Join the [#typescript](https://twitter.com/search?q=%23TypeScript) discussion on Twitter.
-* [Contribute bug fixes](https://github.com/microsoft/TypeScript/blob/main/CONTRIBUTING.md).
+3. Start the development server:
+```bash
+npx expo start
+```
 
-This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see
-the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com)
-with any additional questions or comments.
+### Environment Configuration
+Create a `.env` file in the root directory:
+```env
+API_URL=your_api_url
+```
 
-## Documentation
+## Features and Implementation
 
-*  [TypeScript in 5 minutes](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html)
-*  [Programming handbook](https://www.typescriptlang.org/docs/handbook/intro.html)
-*  [Homepage](https://www.typescriptlang.org/)
+### Authentication Flow
+- Email/password authentication
+- Form validation
+- Error handling
+- Loading states
+- Haptic feedback
+- Dark mode support
 
-## Roadmap
+### Payment Flow
+- Number pad for amount entry
+- Group split configuration
+- Payment platform integration
+- QR code generation
+- Link sharing functionality
 
-For details on our planned features and future direction, please refer to our [roadmap](https://github.com/microsoft/TypeScript/wiki/Roadmap).
+## Testing
+- TestFlight for iOS beta testing
+- Manual testing procedures
+- User acceptance testing
+
+## Deployment
+### TestFlight
+1. Register for Apple Developer Account
+2. Configure App Store Connect
+3. Upload build through Xcode
+4. Distribute to testers
+
+### Production (Future)
+- App Store submission requirements
+- Review guidelines compliance
+- Marketing materials preparation
+
+## Future Enhancements
+- Social authentication (Google, Apple)
+- Receipt scanning
+- Bank linking
+- Advanced splitting algorithms
+- Business-specific features
+- Web dashboard integration
+
+## Development Guidelines
+
+### Code Style
+- Use TypeScript for type safety
+- Follow React Native best practices
+- Implement proper error handling
+- Add comments for complex logic
+
+### Git Workflow
+1. Create feature branches from development
+2. Use meaningful commit messages
+3. Submit pull requests for review
+4. Merge to main branch after approval
+
+### Documentation
+- Document new components
+- Update README as needed
+- Maintain API documentation
+- Comment complex business logic
+
+## Security Considerations
+- JWT token management
+- Secure storage practices
+- API error handling
+- Data validation
+
+## Performance Considerations
+- Optimize image assets
+- Minimize re-renders
+- Efficient state management
+- Proper error boundaries
+
+## Contributing
+1. Fork the repository
+2. Create your feature branch
+3. Commit your changes
+4. Push to the branch
+5. Create a Pull Request
