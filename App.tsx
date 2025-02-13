@@ -7,6 +7,7 @@ import { AppProvider } from './src/providers/AppProvider';
 import { AuthProvider } from './src/providers/AuthProvider';
 import SignInScreen from './src/screens/auth/SignInScreen';
 import SignUpScreen from './src/screens/auth/SignUpScreen';
+import ProfileSetupScreen from './src/screens/auth/ProfileSetupScreen';
 import HomeScreen from './src/screens/app/HomeScreen';
 import SplashScreen from './src/screens/SplashScreen';
 import { RootStackParamList } from './src/navigation/types';
@@ -27,7 +28,7 @@ const navigationTheme = {
 };
 
 function NavigationContent() {
-  const { user } = useAuthContext();
+  const { user, needsProfileSetup } = useAuthContext();
 
   return (
     <Stack.Navigator 
@@ -43,6 +44,8 @@ function NavigationContent() {
           <Stack.Screen name="SignIn" component={SignInScreen} />
           <Stack.Screen name="SignUp" component={SignUpScreen} />
         </>
+      ) : needsProfileSetup ? (
+        <Stack.Screen name="ProfileSetup" component={ProfileSetupScreen} />
       ) : (
         <Stack.Screen name="Home" component={HomeScreen} />
       )}

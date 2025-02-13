@@ -8,7 +8,7 @@ import { RootStackParamList } from '../../navigation/types';
 import { useAuthContext } from '../../providers/AuthProvider';
 import { useTheme } from '../../hooks/useTheme';
 import { validateEmail, validatePassword, getPasswordStrength } from '../../utils/validation';
-import { validateUsername, containsOffensiveContent } from '../../utils/wordFilter';
+import { validateUsername } from '../../utils/wordFilter';
 import { haptic } from '../../utils/haptics';
 
 
@@ -66,7 +66,8 @@ const SignUpScreen: React.FC<Props> = ({ navigation }) => {
     try {
       await haptic.medium(); // Feedback when button is pressed
       await signup({ email, username, password });
-      await haptic.success(); // Feedback for successful signup
+      await haptic.success();
+      navigation.navigate('ProfileSetup'); 
     } catch (err) {
       await haptic.error(); // Feedback for failed signup
     }
